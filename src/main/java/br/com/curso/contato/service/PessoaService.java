@@ -1,9 +1,14 @@
 package br.com.curso.contato.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.curso.contato.dto.EnderecoDTO;
 import br.com.curso.contato.dto.PessoaDTO;
+import br.com.curso.contato.model.Endereco;
 import br.com.curso.contato.model.Pessoa;
 import br.com.curso.contato.repository.PessoaRepository;
 
@@ -39,15 +44,27 @@ public class PessoaService {
         if (dto.getIdade() < 18) {
             System.out.println("Não e possível cadastrar menor de idade.");
             
-            Pessoa model = new Pessoa();
-            model.setId(dto.getId());
-            model.setEmail(dto.getEmail());
-            model.setNome(dto.getNome());
-            model.setTelefone(dto.getTelefone());
-            model.setIdade(dto.getIdade());
+            Pessoa pessoa = new Pessoa();
+            pessoa.setId(dto.getId());
+            pessoa.setEmail(dto.getEmail());
+            pessoa.setNome(dto.getNome());
+            pessoa.setTelefone(dto.getTelefone());
+            pessoa.setIdade(dto.getIdade());
 
+            List<Endereco> lstEndereco = new ArrayList<>();
 
-            Pessoa pessoaRetornada = pessoaRepository.save(model);
+            for (EnderecoDTO  enderecoDTO : dto.getEnderecos()) {
+                Endereco endereco = new Endereco();
+                endereco.setPessoa(pessoa);
+                endereco.setLogradouro(enderecoDTO.getLogradouro());
+                lstEndereco.add(endereco);
+                pessoa.setEndereco(lstEndereco);
+            }
+
+            // ORM - Mapeamento do Objeto Relacional
+            Pessoa pessoaRetornada = pessoaRepository.save(pessoa);
+
+            
             System.out.println("ID .. :" + pessoaRetornada.getId());
         } else {
             dto.setIdade(dto.getIdade() + 5);

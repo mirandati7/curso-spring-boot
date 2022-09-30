@@ -1,5 +1,7 @@
 package br.com.curso.contato.dto;
 
+import java.util.List;
+
 public class PessoaDTO {
 
     private Integer id;
@@ -7,6 +9,7 @@ public class PessoaDTO {
     private String telefone;
     private String email;
     private Integer idade;
+    private List<EnderecoDTO> enderecos;
 
     public String getNome() {
         return nome;
@@ -38,8 +41,12 @@ public class PessoaDTO {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    
+    public List<EnderecoDTO> getEnderecos() {
+        return enderecos;
+    }
+    public void setEnderecos(List<EnderecoDTO> enderecos) {
+        this.enderecos = enderecos;
+    }
 
     
     

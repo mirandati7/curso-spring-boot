@@ -1,16 +1,21 @@
 package br.com.curso.contato.model;
 
-import javax.annotation.Generated;
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "pessoa")
-public class Pessoa {
+public class Pessoa  {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +32,9 @@ public class Pessoa {
     
     @Column(name = "idade" )
     private Integer idade;
+
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true, mappedBy="pessoa")
+    private List<Endereco> endereco;
 
     public Integer getId() {
         return id;
@@ -66,6 +74,14 @@ public class Pessoa {
 
     public void setIdade(Integer idade) {
         this.idade = idade;
+    }
+
+    public List<Endereco> getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(List<Endereco> endereco) {
+        this.endereco = endereco;
     }
 
     
