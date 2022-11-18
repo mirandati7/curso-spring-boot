@@ -1,6 +1,5 @@
 package br.com.curso.contato.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
